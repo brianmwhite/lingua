@@ -1,2 +1,3 @@
 dist
 spanish_translator/__pycache__
+poetry.lock
