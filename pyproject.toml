@@ -4,16 +4,19 @@ version = "0.0.0"
 description = "translation and unit conversion utilities with a cli"
 authors = ["Brian White <brian@thirdember.com>"]
 readme = "README.md"
-packages = [{include = "lingua"}]
+packages = [
+    {include = "lingua"},
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 deep-translator = "^1.10.0"
 num2words = "^0.5.12"
 cloup = "^2.0.0.post1"
+poetry = "^1.4.0"
 
 [tool.poetry.scripts]
-spanish_translator = "lingua.cli:run"
+lingua = "lingua.cli:run"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^6.0.0"

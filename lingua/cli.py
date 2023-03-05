@@ -1,8 +1,8 @@
 import cloup
-from cloup import option_group, option
+from cloup import option, option_group
 from cloup.constraints import RequireExactly
-from translation.translation import SpanishTranslation
-from unitconversion.unitconversion import UnitConversion
+from lingua.spanish_translations import SpanishTranslation
+from lingua.unit_conversion import UnitConversion
 
 
 @cloup.command()
@@ -36,13 +36,14 @@ def run(**kwargs):
         f = uc.celsius_to_fahrenheit(input_temp)
         
         print(
-            f"{input_temp_string}°F > {c:.g}°C\n"
+            f"{input_temp_string}°F > {c:g}°C\n"
             f"{input_temp_string}°C > {f:g}°F"
         )
     elif kwargs.get("distance"):
         uc = UnitConversion()
         input_string = kwargs.get("distance")
         number = uc.string_to_float(input_string)
+        
         km = uc.miles_to_km(number)
         m = uc.km_to_miles(number)
         
@@ -54,6 +55,7 @@ def run(**kwargs):
         uc = UnitConversion()
         input_string = kwargs.get("weight")
         number = uc.string_to_float(input_string)
+        
         kg = uc.lb_to_kg(number)
         lbs = uc.kg_to_lb(number)
         
@@ -65,6 +67,7 @@ def run(**kwargs):
         uc = UnitConversion()
         input_string = kwargs.get("length")
         number = uc.string_to_float(input_string)
+        
         kg = uc.lb_to_kg(number)
         lbs = uc.kg_to_lb(number)
         
