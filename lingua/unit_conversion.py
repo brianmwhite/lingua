@@ -34,3 +34,16 @@ class UnitConversion:
     def miles_to_km(self, miles: float):
         km = miles * 1.60934
         return km
+
+    # length
+    def feet_to_meters(self, length):
+        return length * 0.3048
+
+    def meters_to_feet(self, length):
+        return length / 0.3048
+    
+    def inches_to_cm(self, length):
+        return length * 2.54
+
+    def cm_to_inches(self, length):
+        return length / 2.54
