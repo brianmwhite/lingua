@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lingua"
-version = "0.0.0"
+version = "0.0.0.post4.dev0+6c4be47"
 description = "translation and unit conversion utilities with a cli"
 authors = ["Brian White <brian@thirdember.com>"]
 readme = "README.md"
@@ -26,6 +26,5 @@ black = "^23.1.0"
 enable = true
 
 [build-system]
-requires = ["poetry-core", "poetry-dynamic-versioning"]
-build-backend = "poetry.core.masonry.api"
-# build-backend = "poetry_dynamic_versioning.backend"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"
