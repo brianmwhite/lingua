@@ -75,9 +75,9 @@ def run(**kwargs):
         
         print(
             f"{input_string} inches > {cm:g} cm or {cm*100:g} mm\n"
-            f"{input_string} cm > {inch:g} inches\n"
+            f"{input_string} cm > {inch:g} inches or {inch/12:g} feet\n"
             f"{input_string} ft > {m:g} meters or {m*100:g} cm\n"
-            f"{input_string} meters > {ft:g} feet"
+            f"{input_string} meters > {ft:g} feet or {ft*12:g} inches"
         )
 
 
