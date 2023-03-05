@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "spanish_translator"
+name = "lingua"
 version = "0.0.0"
-description = "cli to translate to spanish"
+description = "translation and unit conversion utilities with a cli"
 authors = ["Brian White <brian@thirdember.com>"]
 readme = "README.md"
-packages = [{include = "spanish_translator"}]
+packages = [{include = "lingua"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -13,7 +13,7 @@ num2words = "^0.5.12"
 cloup = "^2.0.0.post1"
 
 [tool.poetry.scripts]
-spanish_translator = "spanish_translator.cli:run"
+spanish_translator = "lingua.cli:run"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^6.0.0"

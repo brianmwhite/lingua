@@ -126,3 +126,6 @@ class SpanishTranslation:
         # print(f"{number_as_string} -> {text}")
         # print(f"{translated}")
         return (translated_number_in_spanish, original_number_as_text_in_english)
+
+    def string_to_float(self, input_string: str):
+        return locale.atof(input_string)
