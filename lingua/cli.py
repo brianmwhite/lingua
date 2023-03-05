@@ -68,12 +68,16 @@ def run(**kwargs):
         input_string = kwargs.get("length")
         number = uc.string_to_float(input_string)
         
-        kg = uc.lb_to_kg(number)
-        lbs = uc.kg_to_lb(number)
+        m = uc.feet_to_meters(number)
+        ft = uc.meters_to_feet(number)
+        inch = uc.cm_to_inches(number)
+        cm = uc.inches_to_cm(number)
         
         print(
-            f"{input_string} lbs > {kg:g} kg\n"
-            f"{input_string} kg > {lbs:g} lbs"
+            f"{input_string} inches > {cm:g} cm or {cm*100:g} mm\n"
+            f"{input_string} cm > {inch:g} inches\n"
+            f"{input_string} ft > {m:g} meters or {m*100:g} cm\n"
+            f"{input_string} meters > {ft:g} feet"
         )
 
 
