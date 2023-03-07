@@ -124,7 +124,7 @@ class SpanishTranslation:
         # between 0 and less than a billion
         if number >= -1000000000000 and number <= 1000000000000 \
                 and not self.force_google_translate:
-    
+
             translated_number_in_spanish = self.float_to_spanish(number)
         else:
             translated_number_in_spanish = "*" + GoogleTranslator(
@@ -267,7 +267,10 @@ class SpanishTranslation:
             if remainder == 0:
                 return self.int_to_spanish(input_number // 1000) + ' mil'
             else:
-                return self.int_to_spanish(input_number // 1000) + ' mil ' + self.int_to_spanish(remainder)
+                return (
+                    f"{self.int_to_spanish(input_number // 1000)}"
+                    f" mil {self.int_to_spanish(remainder)}"
+                )
         elif input_number == 1000000:
             return 'un millón'
         elif input_number < 2000000:
