@@ -7,7 +7,7 @@ from lingua.unit_conversion import UnitConversion
 
 @cloup.command()
 @option_group(
-    "translation options",
+    "translation types",
     option("--number", help="a numerical string to translate to spanish"),
     option("--temp", help="temperature to convert between °C and °F"),
     option("--distance", help="distance to convert between km and miles"),
@@ -20,59 +20,74 @@ from lingua.unit_conversion import UnitConversion
     ),
     constraint=RequireExactly(1),
 )
+@option("--googletrans", default=False, is_flag=True,
+        help="an option to force use of google translate for all numbers")
 def run(**kwargs):
+    # print(kwargs)
+    sp = SpanishTranslation(kwargs.get("googletrans"))
+    uc = UnitConversion()
+
     if kwargs.get("number"):
-        sp = SpanishTranslation()
-        print(sp.translate_number(kwargs.get("number"))[0])
+
+        input_string = kwargs.get("number")
+        number = sp.string_to_float(input_string)
+
+        translation = sp.translate_number(number)
+
+        print(translation[0])
     elif kwargs.get("date"):
-        sp = SpanishTranslation()
         print(sp.translate_date(kwargs.get("date")))
     elif kwargs.get("temp"):
-        uc = UnitConversion()
         input_temp_string = kwargs.get("temp")
         input_temp = uc.string_to_float(input_temp_string)
-        
-        c = uc.fahrenheit_to_celsius(input_temp)
-        f = uc.celsius_to_fahrenheit(input_temp)
-        
+
+        c = round(uc.fahrenheit_to_celsius(input_temp))
+        f = round(uc.celsius_to_fahrenheit(input_temp))
+
+        c_translated = sp.translate_number(c)[0]
+        f_translated = sp.translate_number(f)[0]
+
         print(
-            f"{input_temp_string}°F > {c:g}°C\n"
-            f"{input_temp_string}°C > {f:g}°F"
+            f"{input_temp_string}°F > {c:g}°C ({c_translated} grados)\n"
+            f"{input_temp_string}°C > {f:g}°F ({f_translated} grados)"
         )
     elif kwargs.get("distance"):
-        uc = UnitConversion()
         input_string = kwargs.get("distance")
         number = uc.string_to_float(input_string)
-        
-        km = uc.miles_to_km(number)
-        m = uc.km_to_miles(number)
-        
+
+        km = round(uc.miles_to_km(number), 1)
+        m = round(uc.km_to_miles(number), 1)
+
+        km_translated = sp.translate_number(km)[0]
+        m_translated = sp.translate_number(m)[0]
+
         print(
-            f"{input_string} miles > {km:g} km\n"
-            f"{input_string} km > {m:g} miles"
+            f"{input_string} miles > {km:g} km ({km_translated} kilómetros)\n"
+            f"{input_string} km > {m:g} miles ({m_translated} millas)"
         )
     elif kwargs.get("weight"):
-        uc = UnitConversion()
         input_string = kwargs.get("weight")
         number = uc.string_to_float(input_string)
-        
-        kg = uc.lb_to_kg(number)
-        lbs = uc.kg_to_lb(number)
-        
+
+        kg = round(uc.lb_to_kg(number), 1)
+        lbs = round(uc.kg_to_lb(number), 1)
+
+        kg_translated = sp.translate_number(kg)[0]
+        lbs_translated = sp.translate_number(lbs)[0]
+
         print(
-            f"{input_string} lbs > {kg:g} kg\n"
-            f"{input_string} kg > {lbs:g} lbs"
+            f"{input_string} lbs > {kg:g} kg ({kg_translated} kilogramos)\n"
+            f"{input_string} kg > {lbs:g} lbs ({lbs_translated} libras)"
         )
     elif kwargs.get("length"):
-        uc = UnitConversion()
         input_string = kwargs.get("length")
         number = uc.string_to_float(input_string)
-        
+
         m = uc.feet_to_meters(number)
         ft = uc.meters_to_feet(number)
         inch = uc.cm_to_inches(number)
         cm = uc.inches_to_cm(number)
-        
+
         print(
             f"{input_string} inches > {cm:g} cm or {cm*100:g} mm\n"
             f"{input_string} cm > {inch:g} inches or {inch/12:g} feet\n"
