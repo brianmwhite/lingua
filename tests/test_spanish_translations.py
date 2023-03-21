@@ -62,7 +62,7 @@ def test_int_to_spanish():
     assert sp.int_to_spanish(18) == "dieciocho"
     assert sp.int_to_spanish(19) == "diecinueve"
     assert sp.int_to_spanish(20) == "veinte"
-    assert sp.int_to_spanish(21) == "veintiuno"
+    assert sp.int_to_spanish(21) == "veintiún"
     assert sp.int_to_spanish(22) == "veintidós"
     assert sp.int_to_spanish(23) == "veintitrés"
     assert sp.int_to_spanish(24) == "veinticuatro"

@@ -211,6 +211,8 @@ class SpanishTranslation:
             return 'dieci' + self.int_to_spanish(input_number - 10)
         elif input_number == 20:
             return 'veinte'
+        elif input_number == 21:
+            return 'veintiún'
         elif input_number == 22:
             return "veintidós"
         elif input_number == 23:
