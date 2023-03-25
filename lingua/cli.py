@@ -13,6 +13,8 @@ from lingua.unit_conversion import UnitConversion
     option("--distance", help="distance to convert between km and miles"),
     option("--length", help="length to convert between feet/inches and meters/cm"),
     option("--weight", help="weight to convert between kg and lbs"),
+    option("--mmi", help="length to convert from mm to inches"),
+    option("--imm", help="length to convert from inches to mm"),
     option(
         "--date",
         help="The date string to convert (in format "
@@ -89,10 +91,29 @@ def run(**kwargs):
         cm = uc.inches_to_cm(number)
 
         print(
-            f"{input_string} inches > {cm:g} cm or {cm*100:g} mm\n"
+            f"{input_string} inches > {cm:g} cm or {cm*10:g} mm\n"
+            f"{input_string} mm > {inch/10:g} inches or {inch/10/12:g} feet\n"
             f"{input_string} cm > {inch:g} inches or {inch/12:g} feet\n"
             f"{input_string} ft > {m:g} meters or {m*100:g} cm\n"
             f"{input_string} meters > {ft:g} feet or {ft*12:g} inches"
+        )
+    elif kwargs.get("mmi"):
+        input_string = kwargs.get("mmi")
+        number = uc.string_to_float(input_string)
+
+        inch = uc.cm_to_inches(number)
+
+        print(
+            f"{input_string} mm > {inch/10:g} inches or {inch/10/12:g} feet"
+        )
+    elif kwargs.get("imm"):
+        input_string = kwargs.get("imm")
+        number = uc.string_to_float(input_string)
+
+        cm = uc.inches_to_cm(number)
+
+        print(
+            f"{input_string} inches > {cm*10:g} mm or {cm:g} cm"
         )
 
 
