@@ -30,7 +30,7 @@ def test_cli_date_with_year():
     runner = CliRunner()
     result = runner.invoke(lingua.cli.run, ["--date", "5/3/2023"])
     assert result.exit_code == 0
-    assert result.output == "el tres de mayo de dos mil veintitrés\n"
+    assert result.output == "miércoles, el tres de mayo de dos mil veintitrés\n"
 
 
 def test_cli_temperature():
@@ -58,7 +58,8 @@ def test_cli_length():
     result = runner.invoke(lingua.cli.run, ["--length", "13"])
     assert result.exit_code == 0
     assert result.output == (
-        "13 inches > 33.02 cm or 3302 mm\n"
+        "13 inches > 33.02 cm or 330.2 mm\n"
+        "13 mm > 0.511811 inches or 0.0426509 feet\n"
         "13 cm > 5.11811 inches or 0.426509 feet\n"
         "13 ft > 3.9624 meters or 396.24 cm\n"
         "13 meters > 42.6509 feet or 511.811 inches\n"

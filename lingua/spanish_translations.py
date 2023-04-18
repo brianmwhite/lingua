@@ -101,11 +101,16 @@ class SpanishTranslation:
 
         if is_year_included_in_input:
             try:
-                year_spelled_out = num2words(date_obj.year)
-                translated_year = GoogleTranslator(source="en", target="es").translate(
-                    year_spelled_out
+                # year_spelled_out = num2words(date_obj.year)
+                # translated_year = GoogleTranslator(source="en", target="es").translate(
+                #     year_spelled_out
+                # )
+                translated_year = self.int_to_spanish(date_obj.year)
+                translated_date_as_text_in_spanish = (
+                    f"{self.SPANISH_WEEKDAYS[date_obj.weekday()]}, "
+                    f"{translated_date_as_text_in_spanish}"
+                    f" de {translated_year}"
                 )
-                translated_date_as_text_in_spanish += f" de {translated_year}"
             except (
                 TimeoutError,
                 ConnectionError,
