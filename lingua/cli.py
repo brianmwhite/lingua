@@ -3,6 +3,7 @@ from cloup import option, option_group
 from cloup.constraints import RequireExactly
 from lingua.spanish_translations import SpanishTranslation
 from lingua.unit_conversion import UnitConversion
+from datetime import datetime
 
 
 @cloup.command()
@@ -19,6 +20,8 @@ from lingua.unit_conversion import UnitConversion
         "--date",
         help="The date string to convert (in format "
         f'{", ".join(SpanishTranslation.DATE_FORMATS)})',
+        is_flag=False,
+        flag_value=datetime.today().strftime("%m/%d/%y")
     ),
     constraint=RequireExactly(1),
 )
