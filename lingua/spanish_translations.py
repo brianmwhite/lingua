@@ -10,7 +10,8 @@ class SpanishTranslation:
     def __init__(self, force_google_translate=False):
         self.force_google_translate = force_google_translate
 
-    DATE_FORMATS = ["%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%m/%d"]
+    DATE_FORMATS = ["%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%m/%d",
+                    "%m-%d-%Y", "%m-%d-%y", "%m-%d", "%d/%m/%Y"]
 
     SPANISH_MONTHS = [
         "enero",
@@ -86,10 +87,8 @@ class SpanishTranslation:
             except ValueError:
                 pass
         else:
-            # If none of the formats work, raise an error
-            raise ValueError(
-                f"Date string {input_string} does not match any supported formats"
-            )
+            # If none of the formats work, show an error
+            return f"Date string {input_string} does not match any supported formats"
 
         # Print the date object
         # print(date_obj)
