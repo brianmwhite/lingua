@@ -26,6 +26,12 @@ def test_cli_date_with_year():
     assert result.exit_code == 0
 
 
+def test_cli_date_today():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--date"])
+    assert result.exit_code == 0
+
+
 def test_cli_temperature():
     runner = CliRunner()
     result = runner.invoke(lingua.cli.run, ["--temp", "65"])
@@ -41,4 +47,16 @@ def test_cli_distance():
 def test_cli_length():
     runner = CliRunner()
     result = runner.invoke(lingua.cli.run, ["--length", "13"])
+    assert result.exit_code == 0
+
+
+def test_cli_imm():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--imm", "13"])
+    assert result.exit_code == 0
+
+
+def test_cli_mmi():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--mmi", "13"])
     assert result.exit_code == 0
