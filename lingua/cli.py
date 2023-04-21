@@ -4,6 +4,10 @@ from cloup.constraints import RequireExactly
 from lingua.spanish_translations import SpanishTranslation
 from lingua.unit_conversion import UnitConversion
 from datetime import datetime
+from rich import print
+from rich.panel import Panel
+from rich.style import Style
+from rich import box
 
 
 @cloup.command()
@@ -52,10 +56,24 @@ def run(**kwargs):
         c_translated = sp.translate_number(c)[0]
         f_translated = sp.translate_number(f)[0]
 
+        input_temp_translated = sp.translate_number(input_temp)[0]
+
+        output = f"""
+
+{input_temp_string}[yellow]°F {input_temp_translated} grados[/yellow]
+  = {c:g}[green]°C {c_translated} grados[/green]
+
+{input_temp_string}[yellow]°C {input_temp_translated} grados[/yellow]
+  = {f:g}[green]°F {f_translated} grados[/green]
+
+    """
+
         print(
-            f"{input_temp_string}°F > {c:g}°C ({c_translated} grados)\n"
-            f"{input_temp_string}°C > {f:g}°F ({f_translated} grados)"
-        )
+            Panel(
+                output.strip(), box=box.SIMPLE_HEAD,
+                border_style=Style(color="grey39"),
+                highlight=True
+            ))
     elif kwargs.get("distance"):
         input_string = kwargs.get("distance")
         number = uc.string_to_float(input_string)
@@ -63,13 +81,28 @@ def run(**kwargs):
         km = round(uc.miles_to_km(number), 1)
         m = round(uc.km_to_miles(number), 1)
 
+        input_number_translated = sp.translate_number(number)[0]
+
         km_translated = sp.translate_number(km)[0]
         m_translated = sp.translate_number(m)[0]
 
+        output = f"""
+
+{input_string} miles [[yellow]{input_number_translated} millas[/yellow]]
+  = {km:g} km [[green]{km_translated} kilómetros[/green]]
+
+{input_string} km [[yellow]{input_number_translated} km[/yellow]]
+  = {m:g} miles [[green]{m_translated} millas[/green]]
+
+    """
+
         print(
-            f"{input_string} miles > {km:g} km ({km_translated} kilómetros)\n"
-            f"{input_string} km > {m:g} miles ({m_translated} millas)"
-        )
+            Panel(
+                output.strip(), box=box.SIMPLE_HEAD,
+                border_style=Style(color="grey39"),
+                highlight=True
+            ))
+            
     elif kwargs.get("weight"):
         input_string = kwargs.get("weight")
         number = uc.string_to_float(input_string)
@@ -80,10 +113,24 @@ def run(**kwargs):
         kg_translated = sp.translate_number(kg)[0]
         lbs_translated = sp.translate_number(lbs)[0]
 
+        input_number_translated = sp.translate_number(number)[0]
+
+        output = f"""
+
+{input_string} lbs [[yellow]{input_number_translated} libras[/yellow]]
+  = {kg:g} kg [[green]{kg_translated} kilogramos[/green]]
+
+{input_string} kg [[yellow]{input_number_translated} kilogramos[/yellow]]
+  = {lbs:g} lbs [[green]{lbs_translated} libras[/green]]
+
+    """
+
         print(
-            f"{input_string} lbs > {kg:g} kg ({kg_translated} kilogramos)\n"
-            f"{input_string} kg > {lbs:g} lbs ({lbs_translated} libras)"
-        )
+            Panel(
+                output.strip(), box=box.SIMPLE_HEAD,
+                border_style=Style(color="grey39"),
+                highlight=True
+            ))
     elif kwargs.get("length"):
         input_string = kwargs.get("length")
         number = uc.string_to_float(input_string)
