@@ -35,7 +35,8 @@ def run(**kwargs):
     # print(kwargs)
     sp = SpanishTranslation(kwargs.get("googletrans"))
     uc = UnitConversion()
-
+    output = ""
+    
     if kwargs.get("number"):
 
         input_string = kwargs.get("number")
@@ -43,9 +44,17 @@ def run(**kwargs):
 
         translation = sp.translate_number(number)
 
-        print(translation[0])
+        output = f"""
+
+{number:g} [[yellow]{translation[0]}[/yellow]]
+        
+        """
     elif kwargs.get("date"):
-        print(sp.translate_date(kwargs.get("date")))
+        output = f"""
+
+{kwargs.get("date")} [[yellow]{sp.translate_date(kwargs.get("date"))}[/yellow]]
+
+        """
     elif kwargs.get("temp"):
         input_temp_string = kwargs.get("temp")
         input_temp = uc.string_to_float(input_temp_string)
@@ -60,20 +69,13 @@ def run(**kwargs):
 
         output = f"""
 
-{input_temp_string}[yellow]°F {input_temp_translated} grados[/yellow]
-  = {c:g}[green]°C {c_translated} grados[/green]
+{input_temp_string}°F [[yellow]{input_temp_translated} grados[/yellow]]
+  = {c:g}°C [[green]{c_translated} grados[/green]]
 
-{input_temp_string}[yellow]°C {input_temp_translated} grados[/yellow]
-  = {f:g}[green]°F {f_translated} grados[/green]
+{input_temp_string}°C [[yellow]{input_temp_translated} grados[/yellow]]
+  = {f:g}°F [[green]{f_translated} grados[/green]]
 
     """
-
-        print(
-            Panel(
-                output.strip(), box=box.SIMPLE_HEAD,
-                border_style=Style(color="grey39"),
-                highlight=True
-            ))
     elif kwargs.get("distance"):
         input_string = kwargs.get("distance")
         number = uc.string_to_float(input_string)
@@ -95,14 +97,6 @@ def run(**kwargs):
   = {m:g} miles [[green]{m_translated} millas[/green]]
 
     """
-
-        print(
-            Panel(
-                output.strip(), box=box.SIMPLE_HEAD,
-                border_style=Style(color="grey39"),
-                highlight=True
-            ))
-            
     elif kwargs.get("weight"):
         input_string = kwargs.get("weight")
         number = uc.string_to_float(input_string)
@@ -124,13 +118,6 @@ def run(**kwargs):
   = {lbs:g} lbs [[green]{lbs_translated} libras[/green]]
 
     """
-
-        print(
-            Panel(
-                output.strip(), box=box.SIMPLE_HEAD,
-                border_style=Style(color="grey39"),
-                highlight=True
-            ))
     elif kwargs.get("length"):
         input_string = kwargs.get("length")
         number = uc.string_to_float(input_string)
@@ -140,31 +127,44 @@ def run(**kwargs):
         inch = uc.cm_to_inches(number)
         cm = uc.inches_to_cm(number)
 
-        print(
-            f"{input_string} inches > {cm:g} cm or {cm*10:g} mm\n"
-            f"{input_string} mm > {inch/10:g} inches or {inch/10/12:g} feet\n"
-            f"{input_string} cm > {inch:g} inches or {inch/12:g} feet\n"
-            f"{input_string} ft > {m:g} meters or {m*100:g} cm\n"
-            f"{input_string} meters > {ft:g} feet or {ft*12:g} inches"
-        )
+        output = f"""
+
+{input_string} inches = {cm:g} cm or {cm*10:g} mm
+{input_string} mm = {inch/10:g} inches or {inch/10/12:g} feet
+{input_string} cm = {inch:g} inches or {inch/12:g} feet
+{input_string} ft = {m:g} meters or {m*100:g} cm
+{input_string} meters = {ft:g} feet or {ft*12:g} inches
+
+        """
     elif kwargs.get("mmi"):
         input_string = kwargs.get("mmi")
         number = uc.string_to_float(input_string)
 
         inch = uc.cm_to_inches(number)
 
-        print(
-            f"{input_string} mm > {inch/10:g} inches or {inch/10/12:g} feet"
-        )
+        output = f"""
+
+{input_string} mm = {inch/10:g} inches or {inch/10/12:g} feet
+       
+         """
     elif kwargs.get("imm"):
         input_string = kwargs.get("imm")
         number = uc.string_to_float(input_string)
 
         cm = uc.inches_to_cm(number)
 
-        print(
-            f"{input_string} inches > {cm*10:g} mm or {cm:g} cm"
-        )
+        output = f"""
+
+{input_string} inches = {cm*10:g} mm or {cm:g} cm
+
+        """
+
+    print(
+        Panel(
+            output.strip(), box=box.SIMPLE_HEAD,
+            border_style=Style(color="grey39"),
+            highlight=True
+        ))
 
 
 if __file__ == "__main__" or __name__ == "__main__":
