@@ -82,11 +82,11 @@ def weight_output(input_string: str):
 
     output = f"""
 
-  {input_string} lbs [[yellow]{input_number_translated} libras[/yellow]]
-    = {kg:g} kg [[green]{kg_translated} kilogramos[/green]]
+{input_string} lbs [[yellow]{input_number_translated} libras[/yellow]]
+  = {kg:g} kg [[green]{kg_translated} kilogramos[/green]]
 
-  {input_string} kg [[yellow]{input_number_translated} kilogramos[/yellow]]
-    = {lbs:g} lbs [[green]{lbs_translated} libras[/green]]
+{input_string} kg [[yellow]{input_number_translated} kilogramos[/yellow]]
+  = {lbs:g} lbs [[green]{lbs_translated} libras[/green]]
 
       """
     return output
