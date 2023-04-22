@@ -1,13 +1,16 @@
+from datetime import datetime
+
 import cloup
 from cloup import option, option_group
 from cloup.constraints import RequireExactly
+# from rich import print
+# from rich.panel import Panel
+# from rich.style import Style
+# from rich import box
+from rich.console import Console
+
 from lingua.spanish_translations import SpanishTranslation
 from lingua.unit_conversion import UnitConversion
-from datetime import datetime
-from rich import print
-from rich.panel import Panel
-from rich.style import Style
-from rich import box
 
 
 @cloup.command()
@@ -31,12 +34,16 @@ from rich import box
 )
 @option("--googletrans", default=False, is_flag=True,
         help="an option to force use of google translate for all numbers")
+@option("--nocolor", default=False, is_flag=True,
+        help="turn off colorized output")
 def run(**kwargs):
     # print(kwargs)
     sp = SpanishTranslation(kwargs.get("googletrans"))
     uc = UnitConversion()
+    console = Console()
+
     output = ""
-    
+
     if kwargs.get("number"):
 
         input_string = kwargs.get("number")
@@ -47,7 +54,7 @@ def run(**kwargs):
         output = f"""
 
 {number:g} [[yellow]{translation[0]}[/yellow]]
-        
+
         """
     elif kwargs.get("date"):
         output = f"""
@@ -145,7 +152,7 @@ def run(**kwargs):
         output = f"""
 
 {input_string} mm = {inch/10:g} inches or {inch/10/12:g} feet
-       
+
          """
     elif kwargs.get("imm"):
         input_string = kwargs.get("imm")
@@ -158,13 +165,16 @@ def run(**kwargs):
 {input_string} inches = {cm*10:g} mm or {cm:g} cm
 
         """
+    if kwargs.get("nocolor"):
+        console.no_color = True
 
-    print(
-        Panel(
-            output.strip(), box=box.SIMPLE_HEAD,
-            border_style=Style(color="grey39"),
-            highlight=True
-        ))
+    # console.print(
+    #     Panel(
+    #         output.strip(), box=box.SIMPLE_HEAD,
+    #         border_style=Style(color="grey39"),
+    #         highlight=True
+    #     ))
+    console.print(output.strip())
 
 
 if __file__ == "__main__" or __name__ == "__main__":

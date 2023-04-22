@@ -14,6 +14,12 @@ def test_cli_weight():
     assert result.exit_code == 0
 
 
+def test_cli_weight_with_nocolor_option():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--weight", "165", "--nocolor"])
+    assert result.exit_code == 0
+
+
 def test_cli_date_without_year():
     runner = CliRunner()
     result = runner.invoke(lingua.cli.run, ["--date", "5/3"])
