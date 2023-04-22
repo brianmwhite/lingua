@@ -3,14 +3,13 @@ from datetime import datetime
 import cloup
 from cloup import option, option_group
 from cloup.constraints import RequireExactly
-# from rich import print
-# from rich.panel import Panel
-# from rich.style import Style
-# from rich import box
+from rich import box
 from rich.console import Console
+from rich.panel import Panel
+from rich.style import Style
 
-from lingua.spanish_translations import SpanishTranslation
 import lingua.cli_output as create
+from lingua.spanish_translations import SpanishTranslation
 
 
 @cloup.command()
@@ -36,9 +35,14 @@ import lingua.cli_output as create
         help="an option to force use of google translate for all numbers")
 @option("--nocolor", default=False, is_flag=True,
         help="turn off colorized output")
+@option("--outputpanel", default=False, is_flag=True,
+        help="surround the output in a panel to separate it from the rest of the console")
 def run(**kwargs):
     console = Console()
     output = ""
+
+    if kwargs.get("nocolor"):
+        console.no_color = True
 
     if kwargs.get("number"):
         output = create.number_output(kwargs.get("number"), kwargs.get("googletrans"))
@@ -56,16 +60,16 @@ def run(**kwargs):
         output = create.mmi_output(kwargs.get("mmi"))
     elif kwargs.get("imm"):
         output = create.imm_output(kwargs.get("imm"))
-    if kwargs.get("nocolor"):
-        console.no_color = True
 
-    # console.print(
-    #     Panel(
-    #         output.strip(), box=box.SIMPLE_HEAD,
-    #         border_style=Style(color="grey39"),
-    #         highlight=True
-    #     ))
-    console.print(output.strip())
+    if kwargs.get("outputpanel"):
+        console.print(
+            Panel(
+                output.strip(), box=box.SIMPLE_HEAD,
+                border_style=Style(color="grey39"),
+                highlight=True
+            ))
+    else:
+        console.print(output.strip())
 
 
 if __file__ == "__main__" or __name__ == "__main__":

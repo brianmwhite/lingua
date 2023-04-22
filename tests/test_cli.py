@@ -8,6 +8,12 @@ def test_cli_number():
     assert result.exit_code == 0
 
 
+def test_cli_number_with_outputpanel_option():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--number", "100", "--outputpanel"])
+    assert result.exit_code == 0
+
+
 def test_cli_weight():
     runner = CliRunner()
     result = runner.invoke(lingua.cli.run, ["--weight", "165"])
