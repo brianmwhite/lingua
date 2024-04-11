@@ -6,7 +6,7 @@ def number_output(input_string: str):
     sp = SpanishTranslation()
     number = sp.string_to_float(input_string)
     translation = sp.translate_number(number)
-    return f"{number:g} [[yellow]{translation[0]}[/yellow]]"
+    return f"{number:,} [[yellow]{translation[0]}[/yellow]]"
 
 
 def date_output(input_string: str):
@@ -31,10 +31,10 @@ def temperature_output(input_temp_string: str):
     output = f"""
 
 {input_temp_string}°F [[yellow]{input_temp_translated} grados[/yellow]]
-  = {c:g}°C [[green]{c_translated} grados[/green]]
+  = {c:,}°C [[green]{c_translated} grados[/green]]
 
 {input_temp_string}°C [[yellow]{input_temp_translated} grados[/yellow]]
-  = {f:g}°F [[green]{f_translated} grados[/green]]
+  = {f:,}°F [[green]{f_translated} grados[/green]]
 
     """
     return output
@@ -57,10 +57,10 @@ def distance_output(input_string: str):
     output = f"""
 
 {input_string} miles [[yellow]{input_number_translated} millas[/yellow]]
-  = {km:g} km [[green]{km_translated} kilómetros[/green]]
+  = {km:,} km [[green]{km_translated} kilómetros[/green]]
 
 {input_string} km [[yellow]{input_number_translated} km[/yellow]]
-  = {m:g} miles [[green]{m_translated} millas[/green]]
+  = {m:,} miles [[green]{m_translated} millas[/green]]
 
     """
     return output
@@ -83,10 +83,10 @@ def weight_output(input_string: str):
     output = f"""
 
 {input_string} lbs [[yellow]{input_number_translated} libras[/yellow]]
-  = {kg:g} kg [[green]{kg_translated} kilogramos[/green]]
+  = {kg:,} kg [[green]{kg_translated} kilogramos[/green]]
 
 {input_string} kg [[yellow]{input_number_translated} kilogramos[/yellow]]
-  = {lbs:g} lbs [[green]{lbs_translated} libras[/green]]
+  = {lbs:,} lbs [[green]{lbs_translated} libras[/green]]
 
       """
     return output
@@ -104,11 +104,11 @@ def length_output(input_string: str):
 
     output = f"""
 
-{input_string} inches = {cm:g} cm or {cm*10:g} mm
-{input_string} mm = {inch/10:g} inches or {inch/10/12:g} feet
-{input_string} cm = {inch:g} inches or {inch/12:g} feet
-{input_string} ft = {m:g} meters or {m*100:g} cm
-{input_string} meters = {ft:g} feet or {ft*12:g} inches
+{input_string} inches = {cm:,} cm or {cm*10:,} mm
+{input_string} mm = {inch/10:,} inches or {inch/10/12:,} feet
+{input_string} cm = {inch:,} inches or {inch/12:,} feet
+{input_string} ft = {m:,} meters or {m*100:,} cm
+{input_string} meters = {ft:,} feet or {ft*12:,} inches
 
         """
     return output
@@ -120,7 +120,7 @@ def mmi_output(input_string: str):
     inch = uc.cm_to_inches(number)
     output = f"""
 
-{input_string} mm = {inch/10:g} inches or {inch/10/12:g} feet
+{input_string} mm = {inch/10:,} inches or {inch/10/12:,} feet
 
          """
     return output
@@ -134,7 +134,7 @@ def imm_output(input_string: str):
 
     output = f"""
 
-{input_string} inches = {cm*10:g} mm or {cm:g} cm
+{input_string} inches = {cm*10:,} mm or {cm:,} cm
 
         """
     return output
