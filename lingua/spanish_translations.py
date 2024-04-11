@@ -1,14 +1,11 @@
 import locale
 from datetime import datetime
 
-from deep_translator import GoogleTranslator
 from num2words import num2words
 import math
 
 
 class SpanishTranslation:
-    def __init__(self, force_google_translate=False):
-        self.force_google_translate = force_google_translate
 
     DATE_FORMATS = ["%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y", "%m/%d",
                     "%m-%d-%Y", "%m-%d-%y", "%m-%d", "%d/%m/%Y"]
@@ -100,10 +97,6 @@ class SpanishTranslation:
 
         if is_year_included_in_input:
             try:
-                # year_spelled_out = num2words(date_obj.year)
-                # translated_year = GoogleTranslator(source="en", target="es").translate(
-                #     year_spelled_out
-                # )
                 translated_year = self.int_to_spanish(date_obj.year)
                 translated_date_as_text_in_spanish = (
                     f"{self.SPANISH_WEEKDAYS[date_obj.weekday()]}, "
@@ -113,9 +106,6 @@ class SpanishTranslation:
             except (
                 TimeoutError,
                 ConnectionError,
-                GoogleTranslator.RequestError,
-                GoogleTranslator.TooManyRequests,
-                GoogleTranslator.TranslationNotFound,
             ):
                 translated_date_as_text_in_spanish += " [year not translated]"
                 pass
@@ -126,14 +116,10 @@ class SpanishTranslation:
         original_number_as_text_in_english = num2words(number)
 
         # between 0 and less than a billion
-        if number >= -1000000000000 and number <= 1000000000000 \
-                and not self.force_google_translate:
-
+        if number >= -1000000000000 and number <= 1000000000000:
             translated_number_in_spanish = self.float_to_spanish(number)
         else:
-            translated_number_in_spanish = "*" + GoogleTranslator(
-                source="en", target="es"
-            ).translate(original_number_as_text_in_english)
+            translated_number_in_spanish = "[!]"
 
         return (translated_number_in_spanish, original_number_as_text_in_english)
 

@@ -4,13 +4,10 @@ version = "0.0.0.post4.dev0+6c4be47"
 description = "translation and unit conversion utilities with a cli"
 authors = ["Brian White <brian@thirdember.com>"]
 readme = "README.md"
-packages = [
-    {include = "lingua"},
-]
+packages = [{ include = "lingua" }]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-deep-translator = "^1.10.0"
+python = "^3.9"
 num2words = "^0.5.12"
 cloup = "^2.0.0.post1"
 poetry = "^1.4.0"

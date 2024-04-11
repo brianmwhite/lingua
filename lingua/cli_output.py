@@ -2,8 +2,8 @@ from lingua.spanish_translations import SpanishTranslation
 from lingua.unit_conversion import UnitConversion
 
 
-def number_output(input_string: str, use_google_translate=False):
-    sp = SpanishTranslation(use_google_translate)
+def number_output(input_string: str):
+    sp = SpanishTranslation()
     number = sp.string_to_float(input_string)
     translation = sp.translate_number(number)
     return f"{number:g} [[yellow]{translation[0]}[/yellow]]"

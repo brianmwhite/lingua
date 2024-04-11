@@ -31,8 +31,6 @@ from lingua.spanish_translations import SpanishTranslation
     ),
     constraint=RequireExactly(1),
 )
-@option("--googletrans", default=False, is_flag=True,
-        help="an option to force use of google translate for all numbers")
 @option("--nocolor", default=False, is_flag=True,
         help="turn off colorized output")
 @option("--outputpanel", default=False, is_flag=True,
@@ -45,7 +43,7 @@ def run(**kwargs):
         console.no_color = True
 
     if kwargs.get("number"):
-        output = create.number_output(kwargs.get("number"), kwargs.get("googletrans"))
+        output = create.number_output(kwargs.get("number"))
     elif kwargs.get("date"):
         output = create.date_output(kwargs.get("date"))
     elif kwargs.get("temp"):
