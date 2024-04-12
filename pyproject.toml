@@ -12,6 +12,7 @@ num2words = "^0.5.12"
 cloup = "^2.0.0.post1"
 poetry = "^1.4.0"
 rich = "^13.3.4"
+humanfriendly = "^10.0"
 
 [tool.poetry.scripts]
 lingua = "lingua.cli:run"
