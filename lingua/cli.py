@@ -27,14 +27,28 @@ from lingua.spanish_translations import SpanishTranslation
         help="The date string to convert (in format "
         f'{", ".join(SpanishTranslation.DATE_FORMATS)})',
         is_flag=False,
-        flag_value=datetime.today().strftime("%m/%d/%y")
+        flag_value=datetime.today().strftime("%m/%d/%y"),
+    ),
+    option("--tz", help="US timezone to show UTC offset (ET,CT,MT,PT)"),
+    option(
+        "--dst",
+        help="date that the time changes to or from daylight savings in the US",
+        is_flag=True,
+    ),
+    option(
+        "--utc",
+        help="Outputs the current UTC date/time with an offset.",
+        type=float,
     ),
     constraint=RequireExactly(1),
 )
-@option("--nocolor", default=False, is_flag=True,
-        help="turn off colorized output")
-@option("--outputpanel", default=False, is_flag=True,
-        help="surround the output in a panel to separate it from the rest of the console")
+@option("--nocolor", default=False, is_flag=True, help="turn off colorized output")
+@option(
+    "--outputpanel",
+    default=False,
+    is_flag=True,
+    help="surround the output in a panel to separate it from the rest of the console",
+)
 def run(**kwargs):
     console = Console()
     output = ""
@@ -42,30 +56,38 @@ def run(**kwargs):
     if kwargs.get("nocolor"):
         console.no_color = True
 
-    if kwargs.get("number"):
-        output = create.number_output(kwargs.get("number"))
-    elif kwargs.get("date"):
-        output = create.date_output(kwargs.get("date"))
-    elif kwargs.get("temp"):
-        output = create.temperature_output(kwargs.get("temp"))
-    elif kwargs.get("distance"):
-        output = create.distance_output(kwargs.get("distance"))
-    elif kwargs.get("weight"):
-        output = create.weight_output(kwargs.get("weight"))
-    elif kwargs.get("length"):
-        output = create.length_output(kwargs.get("length"))
-    elif kwargs.get("mmi"):
-        output = create.mmi_output(kwargs.get("mmi"))
-    elif kwargs.get("imm"):
-        output = create.imm_output(kwargs.get("imm"))
+    if "number" in kwargs and kwargs["number"] is not None:
+        output = create.number_output(kwargs["number"])
+    elif "date" in kwargs and kwargs["date"] is not None:
+        output = create.date_output(kwargs["date"])
+    elif "temp" in kwargs and kwargs["temp"] is not None:
+        output = create.temperature_output(kwargs["temp"])
+    elif "distance" in kwargs and kwargs["distance"] is not None:
+        output = create.distance_output(kwargs["distance"])
+    elif "weight" in kwargs and kwargs["weight"] is not None:
+        output = create.weight_output(kwargs["weight"])
+    elif "length" in kwargs and kwargs["length"] is not None:
+        output = create.length_output(kwargs["length"])
+    elif "mmi" in kwargs and kwargs["mmi"] is not None:
+        output = create.mmi_output(kwargs["mmi"])
+    elif "imm" in kwargs and kwargs["imm"] is not None:
+        output = create.imm_output(kwargs["imm"])
+    elif "tz" in kwargs and kwargs["tz"] is not None:
+        output = create.timezone_output(kwargs["tz"])
+    elif "dst" in kwargs and kwargs["dst"]:
+        output = create.timezone_next_time_change_output("ET")
+    elif "utc" in kwargs:
+        output = create.timezone_utc_output(kwargs["utc"])
 
     if kwargs.get("outputpanel"):
         console.print(
             Panel(
-                output.strip(), box=box.SIMPLE_HEAD,
+                output.strip(),
+                box=box.SIMPLE_HEAD,
                 border_style=Style(color="grey39"),
-                highlight=True
-            ))
+                highlight=True,
+            )
+        )
     else:
         console.print(output.strip())
 

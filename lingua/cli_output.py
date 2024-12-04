@@ -1,10 +1,34 @@
 from lingua.spanish_translations import SpanishTranslation
 from lingua.unit_conversion import UnitConversion
+from lingua.timezone_helper import TimezoneHelper
 import humanfriendly
 
 
 def format_number(number: float):
     return humanfriendly.format_number(number)
+
+
+def timezone_output(input_string: str):
+    tz = TimezoneHelper()
+    tz_full_name = tz.get_timezone_full_name(input_string)
+    tz.set_timezone(tz_full_name)
+    return tz.get_timezone_info()
+
+
+def timezone_utc_output(offset: float):
+    tz = TimezoneHelper()
+    # sp = SpanishTranslation()
+    # offset = sp.string_to_float(input_string)
+    return tz.get_current_utc_time(offset).strftime("%Y-%m-%d %H:%M:%S")
+
+
+def timezone_next_time_change_output(input_string: str):
+    tz = TimezoneHelper()
+    tz_full_name = tz.get_timezone_full_name(input_string)
+    tz.set_timezone(tz_full_name)
+    change_date = tz.get_next_timechange_date()
+    date_string = change_date.strftime("%B %-d, %Y")  # Format as "Month Day, Year"
+    return date_string
 
 
 def number_output(input_string: str):

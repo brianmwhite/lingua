@@ -2,6 +2,41 @@ from click.testing import CliRunner
 import lingua.cli
 
 
+def test_dst():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--dst"])
+    assert result.output is not None and result.output.strip() != ""
+    assert result.exit_code == 0
+
+
+def test_tz():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--tz", "et"])
+    assert result.output is not None and result.output.strip() != ""
+    assert result.exit_code == 0
+
+
+def test_utc_zero():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--utc", "0"])
+    assert result.output is not None and result.output.strip() != ""
+    assert result.exit_code == 0
+
+
+def test_utc_negative():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--utc", "-5"])
+    assert result.output is not None and result.output.strip() != ""
+    assert result.exit_code == 0
+
+
+def test_utc_positive():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.run, ["--utc", "5"])
+    assert result.output is not None and result.output.strip() != ""
+    assert result.exit_code == 0
+
+
 def test_cli_number():
     runner = CliRunner()
     result = runner.invoke(lingua.cli.run, ["--number", "100"])
