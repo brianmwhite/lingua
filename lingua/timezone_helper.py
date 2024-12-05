@@ -19,7 +19,7 @@ class TimezoneHelper:
             timezone_path = "America/Los_Angeles"
         else:
             raise ValueError(
-                "Unsupported timezone. Use 'ET' for Eastern Time or 'CT' for Central Time or 'MT' for Mountain Time or 'PT' for Pacific Time'."
+                "Unsupported timezone. Use 'ET' for Eastern or 'CT' for Central or 'MT' for Mountain or 'PT' for Pacific."
             )
         return timezone_path
 
