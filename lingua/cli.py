@@ -76,7 +76,7 @@ def run(**kwargs):
         output = create.timezone_output(kwargs["tz"])
     elif "dst" in kwargs and kwargs["dst"]:
         output = create.timezone_next_time_change_output("ET")
-    elif "utc" in kwargs:
+    elif "utc" in kwargs and kwargs["utc"]:
         output = create.timezone_utc_output(kwargs["utc"])
 
     if kwargs.get("outputpanel"):
