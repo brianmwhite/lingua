@@ -1,8 +1,6 @@
 from datetime import datetime
 
 import cloup
-from cloup import option, option_group
-from cloup.constraints import RequireExactly
 from rich import box
 from rich.console import Console
 from rich.panel import Panel
@@ -11,86 +9,140 @@ from rich.style import Style
 import lingua.cli_output as create
 from lingua.spanish_translations import SpanishTranslation
 
+settings = {"ignore_unknown_options": True}
 
-@cloup.command()
-@option_group(
-    "translation types",
-    option("--number", help="a numerical string to translate to spanish"),
-    option("--temp", help="temperature to convert between °C and °F"),
-    option("--distance", help="distance to convert between km and miles"),
-    option("--length", help="length to convert between feet/inches and meters/cm"),
-    option("--weight", help="weight to convert between kg and lbs"),
-    option("--mmi", help="length to convert from mm to inches"),
-    option("--imm", help="length to convert from inches to mm"),
-    option(
-        "--date",
-        help="The date string to convert (in format "
-        f'{", ".join(SpanishTranslation.DATE_FORMATS)})',
-        is_flag=False,
-        flag_value=datetime.today().strftime("%m/%d/%y"),
-    ),
-    option("--tz", help="US timezone to show UTC offset (ET,CT,MT,PT)"),
-    option(
-        "--dst",
-        help="date that the time changes to or from daylight savings in the US",
-        is_flag=True,
-    ),
-    option(
-        "--utc",
-        help="Outputs the current UTC date/time with an offset.",
-        type=float,
-    ),
-    constraint=RequireExactly(1),
+
+@cloup.group()
+@cloup.option("--colorized/--nocolor", default=True)
+@cloup.option("--outputpanel/--nopanel", default=False)
+@cloup.pass_context
+def translations(ctx, colorized, outputpanel):
+    ctx.ensure_object(dict)
+    ctx.obj["ignore_unknown_options"] = True
+    ctx.obj["colorized"] = colorized
+    ctx.obj["outputpanel"] = outputpanel
+
+
+@translations.command(
+    context_settings=settings, help="a numerical string to translate to spanish"
 )
-@option("--nocolor", default=False, is_flag=True, help="turn off colorized output")
-@option(
-    "--outputpanel",
-    default=False,
-    is_flag=True,
-    help="surround the output in a panel to separate it from the rest of the console",
+@cloup.argument("numeric_input")
+@cloup.pass_context
+def number(ctx, **kwargs):
+    output(ctx, create.number_output(kwargs["numeric_input"]))
+
+
+@translations.command(
+    context_settings=settings, help="temperature to convert between °C and °F"
 )
-def run(**kwargs):
+@cloup.argument("numeric_input")
+@cloup.pass_context
+def temp(ctx, **kwargs):
+    output(ctx, create.temperature_output(kwargs["numeric_input"]))
+
+
+@translations.command(
+    context_settings=settings, help="distance to convert between km and miles"
+)
+@cloup.argument("numeric_input")
+@cloup.pass_context
+def distance(ctx, **kwargs):
+    output(ctx, create.distance_output(kwargs["numeric_input"]))
+
+
+@translations.command(
+    context_settings=settings,
+    help="length to convert between feet/inches and meters/cm",
+)
+@cloup.argument("numeric_input")
+@cloup.pass_context
+def length(ctx, **kwargs):
+    output(ctx, create.length_output(kwargs["numeric_input"]))
+
+
+@translations.command(
+    context_settings=settings, help="weight to convert between kg and lbs"
+)
+@cloup.argument("numeric_input")
+@cloup.pass_context
+def weight(ctx, **kwargs):
+    output(ctx, create.weight_output(kwargs["numeric_input"]))
+
+
+@translations.command(
+    context_settings=settings, help="length to convert from mm to inches"
+)
+@cloup.argument("numeric_input")
+@cloup.pass_context
+def mmi(ctx, **kwargs):
+    output(ctx, create.mmi_output(kwargs["numeric_input"]))
+
+
+@translations.command(
+    context_settings=settings, help="length to convert from inches to mm"
+)
+@cloup.argument("numeric_input")
+@cloup.pass_context
+def imm(ctx, **kwargs):
+    output(ctx, create.imm_output(kwargs["numeric_input"]))
+
+
+@translations.command(
+    context_settings=settings,
+    help="The date string to convert (in format "
+    f'{", ".join(SpanishTranslation.DATE_FORMATS)})',
+)
+@cloup.argument("date_input", default=datetime.today().strftime("%m/%d/%y"))
+@cloup.pass_context
+def date(ctx, **kwargs):
+    output(ctx, create.date_output(kwargs["date_input"]))
+
+
+@translations.command(
+    context_settings=settings, help="US timezone to show UTC offset (ET,CT,MT,PT)"
+)
+@cloup.argument("input", default="ET")
+@cloup.pass_context
+def tz(ctx, **kwargs):
+    output(ctx, create.timezone_output(kwargs["input"]))
+
+
+@translations.command(
+    context_settings=settings,
+    help="date that the time changes to or from daylight savings in the US",
+)
+@cloup.pass_context
+def dst(ctx, **kwargs):
+    output(ctx, create.timezone_next_time_change_output("ET"))
+
+
+@translations.command(
+    context_settings=settings, help="Outputs the current UTC date/time with an offset."
+)
+@cloup.argument("numeric_input", default=0)
+@cloup.pass_context
+def utc(ctx, **kwargs):
+    output(ctx, create.timezone_utc_output(kwargs["numeric_input"]))
+
+
+def output(ctx, output_string: str):
     console = Console()
-    output = ""
 
-    if kwargs.get("nocolor"):
+    if not ctx.obj["colorized"]:
         console.no_color = True
 
-    if "number" in kwargs and kwargs["number"] is not None:
-        output = create.number_output(kwargs["number"])
-    elif "date" in kwargs and kwargs["date"] is not None:
-        output = create.date_output(kwargs["date"])
-    elif "temp" in kwargs and kwargs["temp"] is not None:
-        output = create.temperature_output(kwargs["temp"])
-    elif "distance" in kwargs and kwargs["distance"] is not None:
-        output = create.distance_output(kwargs["distance"])
-    elif "weight" in kwargs and kwargs["weight"] is not None:
-        output = create.weight_output(kwargs["weight"])
-    elif "length" in kwargs and kwargs["length"] is not None:
-        output = create.length_output(kwargs["length"])
-    elif "mmi" in kwargs and kwargs["mmi"] is not None:
-        output = create.mmi_output(kwargs["mmi"])
-    elif "imm" in kwargs and kwargs["imm"] is not None:
-        output = create.imm_output(kwargs["imm"])
-    elif "tz" in kwargs and kwargs["tz"] is not None:
-        output = create.timezone_output(kwargs["tz"])
-    elif "dst" in kwargs and kwargs["dst"]:
-        output = create.timezone_next_time_change_output("ET")
-    elif "utc" in kwargs and kwargs["utc"]:
-        output = create.timezone_utc_output(kwargs["utc"])
-
-    if kwargs.get("outputpanel"):
+    if ctx.obj["outputpanel"]:
         console.print(
             Panel(
-                output.strip(),
+                output_string.strip(),
                 box=box.SIMPLE_HEAD,
                 border_style=Style(color="grey39"),
                 highlight=True,
             )
         )
     else:
-        console.print(output.strip())
+        console.print(output_string.strip())
 
 
 if __file__ == "__main__" or __name__ == "__main__":
-    run()
+    translations()
