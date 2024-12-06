@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lingua"
-version = "v1.4.0"
+version = "v1.5.0"
 description = "translation and unit conversion utilities with a cli"
 authors = ["Brian White <brian@thirdember.com>"]
 readme = "README.md"
