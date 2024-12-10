@@ -7,3 +7,5 @@ poetry update
 
 poetry build
 pip3 install *.whl
+
+tag using git for versioning
