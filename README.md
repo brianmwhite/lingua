@@ -32,3 +32,18 @@
 
 - install the package
 `pip3 install *.whl`
+
+**Aliases for .zshrc**
+alias es-num="lingua number"
+alias es-date="lingua date"
+alias es-len="lingua length"
+alias es-dist="lingua distance"
+alias es-temp="lingua temp"
+alias es-weight="lingua weight"
+alias imm="lingua imm"
+alias mmi="lingua mmi"
+alias tz="lingua tz et"
+alias tze="lingua tz et"
+alias tzc="lingua tz ct"
+alias utc="lingua utc"
+alias dst="lingua dst"
