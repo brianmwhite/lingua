@@ -1,18 +1,29 @@
-[tool.poetry]
+[project]
 name = "lingua"
-version = "v1.5.0"
 description = "translation and unit conversion utilities with a cli"
-authors = ["Brian White <brian@thirdember.com>"]
+authors = [{ name = "Brian White", email = "brian@thirdember.com" }]
 readme = "README.md"
-packages = [{ include = "lingua" }]
+dynamic = ["version"]
+requires-python = ">=3.9,<4.0"
+dependencies = [
+    "num2words (>=0.5.12)",
+    "cloup (>=2.0.0.post1)",
+    "rich (>=13.3.4)",
+    "humanfriendly (>=10.0)",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-num2words = "^0.5.12"
-cloup = "^2.0.0.post1"
-poetry = "^1.4.0"
-rich = "^13.3.4"
-humanfriendly = "^10.0"
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+version = "0.0.0"
+
+[tool.poetry.requires-plugins]
+poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
+
+[tool.poetry-dynamic-versioning]
+enable = true
 
 [tool.poetry.scripts]
 lingua = "lingua.cli:translations"
@@ -23,12 +34,3 @@ flake8 = "^6.0.0"
 black = "^23.1.0"
 flake8-bugbear = "^23.2.13"
 dunamai = "^1.16.0"
-
-[tool.poetry-dynamic-versioning]
-enable = true
-vcs = "git"
-format = "v{base}+{distance}.{commit}"
-
-[build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
-build-backend = "poetry_dynamic_versioning.backend"

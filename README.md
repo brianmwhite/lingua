@@ -1,11 +1,34 @@
-poetry run python lingua/cli.py utc -5
-poetry run pytest
+**Example Commands to Run and Test**
+- example of running a specific command
+`poetry run python lingua/cli.py utc -5`
+- how to run tests
+`poetry run pytest`
 
-poetry update --dry-run
+**Update Dependencies**
+- update dependencies, dry-run or normal
+`poetry update --dry-run`
+`poetry update`
 
-poetry update
+**Git Versioning Commands**
+- python script to help with the versioning process
+`python git_versioning.py {major|minor|patch} [--dry-run]`
+`python git_versioning.py minor --dry-run`
+`python git_versioning.py minor`
 
-poetry build
-pip3 install *.whl
+**manual git commands**
+- get latest versioning tag that was used
+`git describe --tags --match "v*.*.*" --abbrev=0`
 
-tag using git for versioning
+- tag the latest commit
+`git tag v1.5.0`
+`git tag v1.5.2 -m "New release"`
+
+- push to remote with tags
+`git push --follow-tags`
+
+**Example commands to build and install**
+- build the project
+`poetry build`
+
+- install the package
+`pip3 install *.whl`
