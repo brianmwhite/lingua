@@ -1,4 +1,4 @@
-poetry run python lingua/cli.py --utc -5
+poetry run python lingua/cli.py utc -5
 poetry run pytest
 
 poetry update --dry-run

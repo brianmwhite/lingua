@@ -37,6 +37,20 @@ def test_utc_positive():
     assert result.exit_code == 0
 
 
+def test_utc_decimal_positive():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.translations, ["utc", "10.5"])
+    assert result.output is not None and result.output.strip() != ""
+    assert result.exit_code == 0
+
+
+def test_utc_decimal_negative():
+    runner = CliRunner()
+    result = runner.invoke(lingua.cli.translations, ["utc", "-10.5"])
+    assert result.output is not None and result.output.strip() != ""
+    assert result.exit_code == 0
+
+
 def test_cli_number():
     runner = CliRunner()
     result = runner.invoke(lingua.cli.translations, ["number", "100"])

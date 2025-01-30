@@ -119,7 +119,7 @@ def dst(ctx, **kwargs):
 @translations.command(
     context_settings=settings, help="Outputs the current UTC date/time with an offset."
 )
-@cloup.argument("numeric_input", default=0)
+@cloup.argument("numeric_input", default=0.0)
 @cloup.pass_context
 def utc(ctx, **kwargs):
     output(ctx, create.timezone_utc_output(kwargs["numeric_input"]))
